@@ -1,6 +1,7 @@
 
 from setuptools import setup, find_packages
 import os
+import sys
 
 
 # Read the requirements from the requirements.txt file.
@@ -31,3 +32,5 @@ setup(
     ],
     python_requires='>=3.6',
 )
+
+sys.path.append('./test_models/')
