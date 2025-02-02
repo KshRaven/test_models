@@ -13,15 +13,15 @@ import time as clock
 
 PRINT_COLOUR = Fore.GREEN
 # Define possible base directories
-directories = [".\\home", "C:\\Users\\Default\\AppData\\Local"]
+directories = ["./home", "C:/Users/Default/AppData/Local"]
 # Check which directory exists
-PROJECT_DIR = ".\\root"
+PROJECT_DIR = "./root"
 for base_dir in directories:
     if os.path.exists(base_dir):
         PROJECT_DIR = base_dir
         break
 CURRENT_DIR = os.path.abspath(__file__)
-STORAGE_DIR = PROJECT_DIR + "\\storage\\"
+STORAGE_DIR = PROJECT_DIR + "/storage/"
 os.makedirs(STORAGE_DIR, exist_ok=True)
 
 
@@ -31,9 +31,9 @@ def save(items: dict[str, Any], filename: str, directory: str, file_no: int = No
     # Use default directory and name as subdirectory
     if save_location is None:
         save_location = STORAGE_DIR
-    directory = save_location + f"{directory}\\"
+    directory = save_location + f"{directory}/"
     if subdirectory is not None:
-        directory = directory + f"{subdirectory}\\"
+        directory = directory + f"{subdirectory}/"
 
     # Get  file_path
     if extension is None:
@@ -91,9 +91,9 @@ def load(filename: str, directory: str, file_no: int = None,
         # Use default directory and name as subdirectory
         if save_location is None:
             save_location = STORAGE_DIR
-        directory = save_location + f"{directory}\\"
+        directory = save_location + f"{directory}/"
         if subdirectory is not None:
-            directory = directory + f"{subdirectory}\\"
+            directory = directory + f"{subdirectory}/"
 
         # Check if Save folder exists
         if os.path.exists(directory) is False:
@@ -167,7 +167,7 @@ def delete(filename: str, directory: str, file_no: Union[int, None],
 
         entire_dir = False
         if file_no == 0:
-            filepath = directory + '\\' + filename + extension
+            filepath = directory + '/' + filename + extension
         elif file_no is None:
             filepath = directory
             if not disable_warn:
@@ -177,7 +177,7 @@ def delete(filename: str, directory: str, file_no: Union[int, None],
                     return None
             entire_dir = True
         elif file_no > 0:
-            filepath = directory + f"\\{filename}-{file_no}{extension}"
+            filepath = directory + f"/{filename}-{file_no}{extension}"
         else:
             raise NotADirectoryError(f"Failed to delete save folder; invalid 'file_no'")
 
