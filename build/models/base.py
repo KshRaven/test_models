@@ -21,7 +21,6 @@ class Model(nn.Module):
             if latent is not None:
                 # Create and cache the correlation layer and its lower-triangular indices, if needed.
                 if not hasattr(self, 'corr'):
-                    print(latent.shape, std.shape)
                     embedding, features = latent.shape[-1], std.shape[-1]
                     tril_params_num = (features * (features - 1)) // 2
                     self.corr = torch.nn.Linear(embedding, tril_params_num, device=std.device, dtype=std.dtype,
