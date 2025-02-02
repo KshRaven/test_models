@@ -209,7 +209,7 @@ class Reformer(Model):
         self.pri_actv           = manage_params(options, 'pri_actv', nn.SiLU())
         self.sec_actv           = manage_params(options, 'sec_actv', nn.Tanh())
         self.affine             = manage_params(options, 'affine', True)
-        self.distribution       = manage_params(options, ['distribution', 'dist'], 'normal')
+        self.distribution       = manage_params(options, ['distribution', 'dist'], 'mult_var_normal')
         self.epsilon            = manage_params(options, 'epsilon', 1e-8)
         options['sec_actv'] = None
         self.probabilistic      = manage_params(options, ['prob', 'probabilistic'], False)
