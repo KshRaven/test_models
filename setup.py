@@ -17,7 +17,7 @@ def load_requirements(filename='requirements.txt'):
 
 setup(
     name='TestModels',
-    version='1.0',
+    version='1.1',
     author='Bradley Odimmasi',
     author_email='bodimmasi@students.uonbi.ac.ke',
     description='A package for testing build',
