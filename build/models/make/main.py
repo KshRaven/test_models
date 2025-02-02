@@ -209,7 +209,7 @@ class Reformer(Model):
         self.pri_actv           = manage_params(options, 'pri_actv', nn.SiLU())
         self.sec_actv           = manage_params(options, 'sec_actv', nn.Tanh())
         self.affine             = manage_params(options, 'affine', True)
-        self.distribution       = manage_params(options, ['distribution', 'dist'], 'mult_var_normal')
+        self.distribution       = manage_params(options, ['distribution', 'dist'], 'normal')
         self.epsilon            = manage_params(options, 'epsilon', 1e-8)
         options['sec_actv'] = None
         self.probabilistic      = manage_params(options, ['prob', 'probabilistic'], False)
@@ -293,7 +293,7 @@ class Reformer(Model):
         source      = self.mean_std(latent)
         mean        = self.get_mean(source)
         std         = self.get_std(source)
-        dist        = self.dist(mean, std, latent)
+        dist        = self.dist(mean, std, None)
         action      = dist.sample()
         log_prob    = dist.log_prob(action)
         return action, log_prob
@@ -303,7 +303,7 @@ class Reformer(Model):
         source      = self.mean_std(latent)
         mean        = self.get_mean(source)
         std         = self.get_std(source)
-        dist        = self.dist(mean, std, latent)
+        dist        = self.dist(mean, std, None)
         log_prob    = dist.log_prob(action)
         entropy     = dist.entropy()
         return log_prob, entropy
@@ -321,7 +321,7 @@ class Reformer(Model):
             print(f"\n{cmod('Mean =>', Fore.LIGHTCYAN_EX)}\n{mean}, \n\tdim = {mean.shape}")
             if std is not None:
                 print(f"\n{cmod('Std =>', Fore.LIGHTCYAN_EX)}\n{std}, \n\tdim = {std.shape}")
-        dist    = self.dist(mean, std, latent)
+        dist    = self.dist(mean, std, None)
         action  = dist.sample()
         if single:
             action = action.squeeze(-2)
