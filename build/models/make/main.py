@@ -214,6 +214,7 @@ class Reformer(Model):
         options['sec_actv'] = None
         self.probabilistic      = manage_params(options, ['prob', 'probabilistic'], False)
         feed_drop               = manage_params(options, 'feedback_dropout', None)
+        self.bias_enabled       = bias
 
         # BUILD
         self.feedback_feat = (pol_out + val_out) if feedback else None
@@ -276,11 +277,11 @@ class Reformer(Model):
 
     def get_std(self, latent: Tensor) -> Tensor:
         if self.distribution != 'discrete':
-            std = latent[..., -self.pol_size:]
+            log_std = latent[..., self.pol_size:self.pol_size*2]
             if self.probabilistic:
-                std = torch.exp(-9.21 + F.tanh(std) * 6.91)
+                std = torch.exp(-9.21 + F.tanh(log_std) * 6.91)
             else:
-                std = torch.exp(std)
+                std = torch.exp(log_std)
                 if self.sec_actv is not None:
                     std = self.sec_actv(std)
             return self.reduce(std)

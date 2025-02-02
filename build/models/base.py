@@ -22,7 +22,7 @@ class Model(nn.Module):
                 # Create and cache the correlation layer and its lower-triangular indices, if needed.
                 if not hasattr(self, 'corr'):
                     embedding, features = latent.shape[-1], std.shape[-1]
-                    tril_params_num = features * (features - 1) // 2
+                    tril_params_num = (features * (features - 1)) // 2
                     self.corr = torch.nn.Linear(embedding, tril_params_num, device=std.device, dtype=std.dtype,
                                                 bias=self.bias_enabled)
                     self.corr_indices = torch.tril_indices(features, features, offset=-1, device=std.device)
