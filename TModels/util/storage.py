@@ -12,11 +12,17 @@ import time as clock
 
 
 PRINT_COLOUR = Fore.GREEN
+# Define possible base directories
+directories = [".\\home", "C:\\Users\\Default\\AppData\\Local"]
+# Check which directory exists
+PROJECT_DIR = ".\\root"
+for base_dir in directories:
+    if os.path.exists(base_dir):
+        PROJECT_DIR = base_dir
+        break
 CURRENT_DIR = os.path.abspath(__file__)
-PROJECT_DIR = CURRENT_DIR
-while not PROJECT_DIR.endswith("TradingBot"):
-    PROJECT_DIR = os.path.dirname(PROJECT_DIR)
 STORAGE_DIR = PROJECT_DIR + "\\storage\\"
+os.makedirs(STORAGE_DIR, exist_ok=True)
 
 
 def save(items: dict[str, Any], filename: str, directory: str, file_no: int = None, replace=False,
