@@ -1,4 +1,6 @@
 
+colorama
+json5
 numba
 numpy
 protobuf
