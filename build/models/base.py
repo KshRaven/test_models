@@ -21,6 +21,7 @@ class Model(nn.Module):
             if latent is not None:
                 # Create and cache the correlation layer and its lower-triangular indices, if needed.
                 if not hasattr(self, 'corr'):
+                    print(latent.shape, std.shape)
                     embedding, features = latent.shape[-1], std.shape[-1]
                     tril_params_num = (features * (features - 1)) // 2
                     self.corr = torch.nn.Linear(embedding, tril_params_num, device=std.device, dtype=std.dtype,
@@ -31,13 +32,12 @@ class Model(nn.Module):
                 corr = torch.tanh(self.corr(latent))
 
                 # Determine the batch shape from the correlation output (could be one or more batch dims)
-                batch_shape = corr.shape[:-1]
                 features_out = std.shape[-1]  # number of features (must equal 'features')
 
                 # Create a full identity matrix of shape (F, F) and expand it to the batch shape.
                 identity = torch.eye(features_out, device=corr.device, dtype=corr.dtype)
                 # Clone after expansion to ensure a writable (contiguous) tensor.
-                corr_matrix = identity.expand(*batch_shape, features_out, features_out).clone()
+                corr_matrix = identity.expand(*std.shape[:-1], features_out, features_out).clone()
 
                 # Fill the lower-triangular part (excluding the diagonal) with the computed correlations.
                 corr_matrix[..., self.corr_indices[0], self.corr_indices[1]] = corr

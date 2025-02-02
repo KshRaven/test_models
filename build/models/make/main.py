@@ -289,18 +289,20 @@ class Reformer(Model):
             return None
 
     def get_action(self, state: Tensor) -> tuple[Tensor, Tensor]:
-        latent      = self.mean_std(self.get_latent(self.pol_proj, state, self.idx, single=self.single))
-        mean        = self.get_mean(latent)
-        std         = self.get_std(latent)
+        latent      = self.get_latent(self.pol_proj, state, self.idx, single=self.single)
+        source      = self.mean_std(latent)
+        mean        = self.get_mean(source)
+        std         = self.get_std(source)
         dist        = self.dist(mean, std, latent)
         action      = dist.sample()
         log_prob    = dist.log_prob(action)
         return action, log_prob
 
     def evaluate_action(self, state: Tensor, action: Tensor) -> [Tensor, Union[Tensor, None]]:
-        latent      = self.mean_std(self.get_latent(self.pol_proj, state, self.idx, single=self.single))
-        mean        = self.get_mean(latent)
-        std         = self.get_std(latent)
+        latent      = self.get_latent(self.pol_proj, state, self.idx, single=self.single)
+        source      = self.mean_std(latent)
+        mean        = self.get_mean(source)
+        std         = self.get_std(source)
         dist        = self.dist(mean, std, latent)
         log_prob    = dist.log_prob(action)
         entropy     = dist.entropy()
@@ -311,9 +313,10 @@ class Reformer(Model):
         verbose = manage_params(options, 'verbose', None)
         get     = manage_params(options, 'get', False)
         single  = manage_params(options, 'single', False)
-        latent  = self.mean_std(self.get_latent(self.pol_proj, state, pos_idx, verbose, get, single))
-        mean    = self.get_mean(latent)
-        std     = self.get_std(latent)
+        latent  = self.get_latent(self.pol_proj, state, pos_idx, verbose, get, single)
+        source  = self.mean_std(latent)
+        mean    = self.get_mean(source)
+        std     = self.get_std(source)
         if verbose:
             print(f"\n{cmod('Mean =>', Fore.LIGHTCYAN_EX)}\n{mean}, \n\tdim = {mean.shape}")
             if std is not None:
