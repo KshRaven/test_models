@@ -1,6 +1,6 @@
 
-from build.util.qol import manage_params
-from build.util.fancy_text import *
+from TModels.util.qol import manage_params
+from TModels.util.fancy_text import *
 
 from torch import Tensor, device as DEVICE, dtype as DTYPE
 from typing import Union

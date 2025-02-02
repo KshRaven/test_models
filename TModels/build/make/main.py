@@ -1,8 +1,8 @@
 
-from build.models import Model
-from build.models.make.sub import *
-from build.util.fancy_text import *
-from build.util.qol import manage_params
+from TModels.build import Model
+from TModels.build.make.sub import *
+from TModels.util.fancy_text import *
+from TModels.util.qol import manage_params
 
 from torch import Tensor, nn
 from typing import Union
@@ -383,9 +383,9 @@ class Reformer(Model):
 
 
 if __name__ == '__main__':
-    from build.util.storage import STORAGE_DIR
-    from build.util.datetime import unix_to_datetime_file
-    from build.grokfast import gradfilter_ema
+    from TModels.util.storage import STORAGE_DIR
+    from TModels.util.datetime import unix_to_datetime_file
+    from TModels.grokfast import gradfilter_ema
 
     import itertools
     import torch.optim as optim

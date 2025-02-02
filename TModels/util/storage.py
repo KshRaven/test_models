@@ -1,6 +1,6 @@
 import warnings
 
-from build.util.fancy_text import *
+from TModels.util.fancy_text import *
 
 from typing import Any, Union
 

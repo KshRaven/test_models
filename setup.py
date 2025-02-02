@@ -16,11 +16,11 @@ def load_requirements(filename='requirements.txt'):
 
 
 setup(
-    name='test_models',
+    name='TestModels',
     version='1.0',
     author='Bradley Odimmasi',
     author_email='bodimmasi@students.uonbi.ac.ke',
-    description='A package for testing models',
+    description='A package for testing build',
     long_description=open('README.md').read() if os.path.exists('README.md') else '',
     long_description_content_type='text/markdown',
     url='https://github.com/KshRaven/test_models.git',
